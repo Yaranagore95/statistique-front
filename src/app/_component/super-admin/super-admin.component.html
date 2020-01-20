@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/super-admin/home" routerLinkActive="active">Home <span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrapper d-flex">
+  <div class="sideMenu">
+    <ul class="list-group">
+      <!-- Separator with title -->
+      <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+        <p class="text-center font-weight-bolder m-3">SUPER ADMIN</p>
+      </li>
+      <li class="list-group-item bg-theme">
+        <input type="text" class="form-control mr-1 ml-1 text-center findIput" placeholder="Compagine">
+      </li>
+      <li class="list-group-item sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+        <small class="text-center">LES COMPAGINES</small>
+      </li>
+      <!--<span *ngFor="let a of agents | filterCompany : searchText;let i =index">-->
+       <span *ngFor="let a of agents; let i = index">
+        <!-- Test Menu -->
+        <!--<a href="#submenu{{i+1}}" data-toggle="collapse" aria-expanded="false"-->
+         <a routerLink="/super-admin/voyages-compagnie/{{a.id}}" routerLinkActive="active" data-toggle="collapse" aria-expanded="false"
+          class="bg-theme list-group-item list-group-item-theme flex-column align-items-start">
+          <div class="d-flex w-100 justify-content-start align-items-center">
+            <span class="fa fa-compass fa-fw mr-3"></span>
+            <span class="menu-collapsed small">{{a.brandname}}</span>
+            <!--<span class="submenu-icon ml-auto mt-2 mb-2"></span>-->
+            <!--<div id='submenu{{i+1}}' class="collapse sidebar-submenu">
+          <a href="javascript:void(0)" class="list-group-item list-group-item-theme bg-theme text-white" (click)="venteRedirect(a)">
+            <span class="menu-collapsed"><i class="fa fa-shopping-bag" aria-hidden="true">&nbsp;</i> Ventes</span>
+          </a>
+          <a href="javascript:void(0)" class="list-group-item list-group-item-theme bg-theme text-white" (click)="voyageRedirect(a)">
+            <span class="menu-collapsed"><i class="fa fa-bus" aria-hidden="true">&nbsp;</i> Voyages</span>
+          </a>
+        </div>-->
+          </div>
+        </a>
+        <!-- Submenu content -->
+
+      </span>
+      <a href="javascript:void(0);" data-toggle="sidebar-colapse"
+        class="fixed-bottom bg-success list-group-item list-group-item-theme d-flex align-items-center">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span id="collapse-icon" class="fa fa-2x mr-3"></span>
+          <span id="collapse-text" class="menu-collapsed">Reduire</span>
+        </div>
+      </a>
+    </ul>
+  </div>
+  <div class="content">
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

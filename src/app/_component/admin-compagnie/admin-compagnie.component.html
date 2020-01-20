@@ -1,0 +1,42 @@
+<div class="wrapper d-flex">
+  <div class="sideMenu">
+    <ul class="list-group">
+      <li class="list-group-item mt-5 mb-3 sidebar-separator-title text-muted d-flex align-items-center menu-collapsed">
+        <p class="font-weight-bolder text-white">{{currentAgent.brandname}}</p>
+      </li>
+      <a routerLink="/admin-compagnie/home" routerLinkActive="active" data-toggle="collapse" aria-expanded="false"
+         class="bg-theme list-group-item list-group-item-theme flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-compass fa-fw mr-3"></span>
+          <span class="menu-collapsed small">Statistiques</span>
+        </div>
+      </a>
+      <a href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
+         class="bg-theme list-group-item list-group-item-theme flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-compass fa-fw mr-3"></span>
+          <span class="menu-collapsed small">Remplissage</span>
+        </div>
+      </a>
+      <a href="javascript:void(0)" data-toggle="collapse" aria-expanded="false"
+         class="bg-theme list-group-item list-group-item-theme flex-column align-items-start">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span class="fa fa-compass fa-fw mr-3"></span>
+          <span class="menu-collapsed small">Exploitation</span>
+        </div>
+      </a>
+      <a href="javascript:void(0);" data-toggle="sidebar-colapse"
+         class="fixed-bottom bg-success list-group-item list-group-item-theme d-flex align-items-center">
+        <div class="d-flex w-100 justify-content-start align-items-center">
+          <span id="collapse-icon" class="fa fa-2x mr-3"></span>
+          <span id="collapse-text" class="menu-collapsed">Reduire</span>
+        </div>
+      </a>
+    </ul>
+  </div>
+  <div class="content">
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

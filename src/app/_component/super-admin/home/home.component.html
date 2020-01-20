@@ -1,0 +1,229 @@
+<mdb-breadcrumb customClass="col-md-12 mt-3">
+  <mdb-breadcrumb-item class="active">Dashboard</mdb-breadcrumb-item>
+  <mdb-breadcrumb-item>Statistique du jour</mdb-breadcrumb-item>
+</mdb-breadcrumb>
+<div class="col-md-12">
+  <ngx-spinner size="large"
+               color="00ffff"
+               type="ball-scale-multiple"></ngx-spinner>
+</div>
+<!--
+<div class="col-md-12 text-center bg-danger mt-5" style="width: 5rem; height: 5rem;" *ngIf="!dataReady">
+  <div class="spinner-border spinner-border text-center" role="status">
+    <span class="sr-only">Loading ....</span>
+  </div>
+</div>
+-->
+<div class="col-md-12 row mt-3 mb-5" *ngIf="readyData1 && readyData2">
+  <div class="col-md-10 row">
+    <div class="col-md-6" >
+      <mdb-card class="mb-3">
+        <mdb-card-header class="rainy-ashville-gradient">
+          <h3><i class="fas fa-shopping-cart"></i> Ventes</h3>
+        </mdb-card-header>
+        <mdb-card-body>
+          <ul class="list-group">
+            <li class="list-group-item rainy-ashville-gradient pricing-list">
+              <mdb-icon fas icon="money"></mdb-icon>&nbsp;<span class="font-weight-bold">Montant</span>
+              <span class="pull-right font-weight-bolder">&nbsp;fcfa</span>
+              <span class="number counter font-weight-bolder pull-right" >{{montantVente}}</span>
+            </li>
+            <li class="list-group-item rainy-ashville-gradient pricing-list">
+              <mdb-icon fas icon="headset"></mdb-icon>&nbsp;<span class="font-weight-bold">Yobuma</span>
+              <span class="pull-right font-weight-bolder">&nbsp;fcfa</span>
+              <span class="number counter font-weight-bolder pull-right">{{totalYobuma}}</span>
+            </li>
+            <li class="list-group-item rainy-ashville-gradient pricing-list">
+              <mdb-icon fas icon="user-shield"></mdb-icon>&nbsp;<span class="font-weight-bold">Agent</span>
+              <span class="pull-right font-weight-bolder">&nbsp;fcfa</span>
+              <span class="number counter font-weight-bolder pull-right">{{totalAgent}}</span>
+            </li>
+            <!--<li class="list-group-item rainy-ashville-gradient pricing-list">
+              <mdb-icon fas icon="user-"></mdb-icon>&nbsp;<span class="font-weight-bold">Ticket</span>
+              <span class="pull-right font-weight-bolder">&nbsp;fcfa</span>
+              <span class="number counter font-weight-bolder pull-right">{{nbreTicked}}</span>
+            </li>-->
+          </ul>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <div class="col-md-6">
+      <mdb-card class="mb-3">
+        <mdb-card-header class="rainy-ashville-gradient">
+          <h3><i class="fas fa-bus">&nbsp;</i>Voyages</h3>
+        </mdb-card-header>
+        <mdb-card-body>
+          <ul class="list-group">
+            <li class="list-group-item rainy-ashville-gradient pricing-list">
+              <mdb-icon fas icon="money"></mdb-icon>&nbsp;
+              <span class="font-weight-bolder">Montant</span>
+              <span class="pull-right font-weight-bolder">&nbsp;fcfa</span>
+              <span class="number counter1 font-weight-bolder pull-right">{{montantVoyage}}</span>
+            </li>
+            <li class="list-group-item rainy-ashville-gradient pricing-list">
+              <mdb-icon fas icon="user"></mdb-icon>&nbsp;
+              <span class="font-weight-bolder">Voyageurs</span> <span
+              class="number counter1 font-weight-bolder pull-right">{{nbrePassagers}}</span>
+            </li>
+            <li class="list-group-item rainy-ashville-gradient pricing-list">
+              <mdb-icon fas icon="globe-africa"></mdb-icon>&nbsp;
+              <span class="font-weight-bolder">Nbre voyages</span> <span
+              class="number counter1 font-weight-bolder pull-right">{{nbreVoyages}}</span>
+            </li>
+          </ul>
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+  </div>
+  <mdb-card class="col-md-2" *ngIf="readyData1 && readyData2">
+    <mdb-card-title class="text-center">
+      <h5 class="text-success"><i class="fas fa-angle-double-left"></i><u>Classement</u><i
+        class="fas fa-angle-double-right"></i></h5>
+    </mdb-card-title>
+    <mdb-card-body>
+      <h6 class="text-center text-success font-weight-bolder"><i class="fas fa-sort-amount-asc">&nbsp;</i>Ventes </h6>
+      <p *ngIf="displayVente">
+        <span *ngFor="let stat of compareCompVente">
+          <i class="fas fa-hand-o-right small text-success">&nbsp;</i><span class="font-weight-bold">{{stat.comp}}</span><br>
+        </span>
+      </p>
+      <h6 class="text-center text-success font-weight-bolder"><i class="fas fa-sort-amount-asc">&nbsp;</i>Voyages </h6>
+      <p class="text-left" *ngIf="displayVoyage">
+        <span *ngFor="let stat of compareCompVoyages">
+          <i class="fas fa-hand-o-right small text-success">&nbsp;</i><span class="font-weight-bold">{{stat.comp}}</span><br>
+        </span>
+      </p>
+    </mdb-card-body>
+  </mdb-card>
+</div>
+<div class="col-md-12 row mb-5" *ngIf="readyData1 && readyData2">
+  <div class="col-md-6">
+    <h3 class="text-center">Ventes</h3>
+    <div style="display: block;" class="text-center">
+      <canvas mdbChart class="chartId"
+              [chartType]="chartType"
+              [datasets]="chartDataVentes"
+              [labels]="ventesLabels"
+              [colors]="ventesColors"
+              [options]="chartOptions"
+              [legend]="true"
+              (chartHover)="chartHover()"
+              (chartClick)="chartClicked()"
+      >
+      </canvas>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <h3 class="text-center">Voyages</h3>
+    <div style="display: block;" class="text-center">
+      <canvas mdbChart class="chartId"
+              [chartType]="chartType"
+              [datasets]="chartDataVoyages"
+              [labels]="voyagesLabels"
+              [colors]="voyagesColors"
+              [options]="chartOptions"
+              [legend]="true"
+              (chartHover)="chartHover()"
+              (chartClick)="chartClicked()"
+      >
+      </canvas>
+    </div>
+  </div>
+</div>
+<div class="col-md-12 row mb-5" *ngIf="readyData1 && readyData2">
+  <mdb-card class="col-md-12">
+    <mdb-card-header>
+      <h4>Informations globales</h4>
+    </mdb-card-header>
+    <mdb-card-body>
+      <h5>Ventes</h5>
+      <table class="table table-striped table-hover text-center">
+        <thead>
+        <tr>
+          <th>Compagnie</th>
+          <th>Vente</th>
+          <th>Ticket Validé</th>
+          <th>Ticket Annulé</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let comp of infoVentesCompanyArray">
+          <td>{{comp.comp}}</td>
+          <td>{{comp.montant}}</td>
+          <td>{{comp.passager}}</td>
+          <td>{{comp.cancelTicket}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <hr class="bg-success">
+      <h5>Voyage</h5>
+      <table class="table table-striped table-hover text-center">
+        <thead>
+        <tr>
+          <th>Compagnie</th>
+          <th>Somme</th>
+          <th>Voyage</th>
+          <th>Passager</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let comp of infoVoyagesCompanyArray">
+          <td>{{comp.comp}}</td>
+          <td>{{comp.montant}}</td>
+          <td>{{comp.voyage}}</td>
+          <td>{{comp.passager}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </mdb-card-body>
+  </mdb-card>
+</div>
+
+
+<!--<div class="col-md-12 mb-5" *ngIf="dataReady1 && dataReady2">
+  <mdb-card mdbWavesEffect class="mt-3" >
+    <mdb-card-header  class="card-header font-weight-bold">
+      <i class="fa fa-calendar-minus-o text-danger"></i>&nbsp;Statistique du jour
+    </mdb-card-header>
+    <mdb-card-body class="card-body">
+      <table mdbWavesEffect mdbTable class="table table-striped table-hover text-center">
+        <thead>
+        <tr>
+          <th>Ligne</th>
+          <th>Compagnie</th>
+          <th>Passagers</th>
+          <th>Total Paiement</th>
+          <th>Total Caissier</th>
+          <th>Total Operateur</th>
+          <th>Detail</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let val of orders" class="">
+          <td *ngIf="val.nbrePassenger != 0" class="font-weight-bold">{{val.ligne}}</td>
+          <td *ngIf="val.nbrePassenger != 0">{{val.compagnie}}</td>
+          <td *ngIf="val.nbrePassenger != 0" class="font-weight-bold">{{val.nbrePassenger}}</td>
+          <td *ngIf="val.nbrePassenger != 0" class="font-weight-bold">{{val.total}}</td>
+          <td *ngIf="val.nbrePassenger != 0" class="font-weight-bold">{{val.totalCass}}</td>
+          <td *ngIf="val.nbrePassenger != 0" class="font-weight-bold">{{val.totalYob}}</td>
+          <td *ngIf="val.nbrePassenger != 0"><i class="fa fa-building text-danger" data-toggle="modal"
+                                                data-target="#exampleModal" style="cursor: pointer;"
+                                                ></i></td>
+        </tr>
+        </tbody>
+      </table>
+    </mdb-card-body>
+    <mdb-card-footer class="card-footer">
+      <h6 class="font-weight-bold">Informations globales</h6>
+      <ul class="list-unstyled">
+        <li *ngFor="let val of statByCompany">
+          <p class="font-weight-bold mt-3 mb-3"><i class="fa fa-hand-o-right text-danger">&nbsp;</i>Compagnie:
+            <span class="text-danger">{{val.compagnie}}</span>
+            &nbsp;&nbsp;&nbsp;Montatl total payés : <span class="text-danger">{{val.total}} Fcfa</span>
+            &nbsp;&nbsp;&nbsp;Nombre de passagers : <span class="text-danger">{{val.passager}}</span>&nbsp;
+            Vente annulée : <span class="text-danger">{{val.cancelledTicked}}</span></p>
+        </li>
+      </ul>
+    </mdb-card-footer>
+  </mdb-card>
+</div>-->
